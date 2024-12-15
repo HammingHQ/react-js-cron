@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .react-js-cron {
   display: flex;
   align-items: flex-start;
