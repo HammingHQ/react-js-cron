@@ -34,40 +34,44 @@ export default function CustomSelect(props: CustomSelectProps) {
     }
   }, [value])
 
-  const options = useMemo(
-    () => {
-      if (optionsList) {
-        return optionsList
-          .map((option, index) => {
-            const number = unit.min === 0 ? index : index + 1
-
-            return {
-              value: number.toString(),
-              label: option,
-            }
-          })
-          .filter(filterOption)
-      }
-
-      return [...Array(unit.total)]
-        .map((e, index) => {
+  const options = useMemo(() => {
+    if (optionsList) {
+      return optionsList
+        .map((option, index) => {
           const number = unit.min === 0 ? index : index + 1
 
           return {
             value: number.toString(),
-            label: formatValue(
-              number,
-              unit,
-              humanizeLabels,
-              leadingZero,
-              clockFormat
-            ),
+            label: option,
           }
         })
         .filter(filterOption)
-    },
-    [optionsList, leadingZero, humanizeLabels, clockFormat, unit, filterOption]
-  )
+    }
+
+    return [...Array(unit.total)]
+      .map((e, index) => {
+        const number = unit.min === 0 ? index : index + 1
+
+        return {
+          value: number.toString(),
+          label: formatValue(
+            number,
+            unit,
+            humanizeLabels,
+            leadingZero,
+            clockFormat
+          ),
+        }
+      })
+      .filter(filterOption)
+  }, [
+    optionsList,
+    leadingZero,
+    humanizeLabels,
+    clockFormat,
+    unit,
+    filterOption,
+  ])
 
   const renderTag = useCallback(
     (itemValue: string) => {
@@ -86,7 +90,9 @@ export default function CustomSelect(props: CustomSelectProps) {
       const testEveryValue = cronValue.match(/^\*\/([0-9]+),?/) || []
 
       return testEveryValue[1]
-        ? `${locale.everyText || DEFAULT_LOCALE_EN.everyText} ${testEveryValue[1]}`
+        ? `${locale.everyText || DEFAULT_LOCALE_EN.everyText} ${
+            testEveryValue[1]
+          }`
         : cronValue
     },
     [value, unit, humanizeLabels, leadingZero, clockFormat, locale]
@@ -206,8 +212,11 @@ export default function CustomSelect(props: CustomSelectProps) {
   }, [setValue, readOnly])
 
   const dropdownPosition = useMemo(() => {
-    if ((unit.type === 'minutes' || unit.type === 'hours') &&
-        period !== 'day' && period !== 'hour') {
+    if (
+      (unit.type === 'minutes' || unit.type === 'hours') &&
+      period !== 'day' &&
+      period !== 'hour'
+    ) {
       return 'right-0'
     }
     return 'left-0'
@@ -237,7 +246,10 @@ export default function CustomSelect(props: CustomSelectProps) {
   }, [unit.type, period])
 
   return (
-    <div className="relative inline-block min-w-[70px]" data-testid={`custom-select-${unit.type}`}>
+    <div
+      className='relative inline-block min-w-[70px]'
+      data-testid={`custom-select-${unit.type}`}
+    >
       <button
         onClick={() => !readOnly && setIsOpen(!isOpen)}
         disabled={disabled}
@@ -249,18 +261,16 @@ export default function CustomSelect(props: CustomSelectProps) {
         )}
       >
         {value && value.length > 0 ? (
-          <div>
-            {renderTag(stringValue?.[0] || '')}
-          </div>
+          <div>{renderTag(stringValue?.[0] || '')}</div>
         ) : (
-          <span className="text-gray-400">Select...</span>
+          <span className='text-gray-400'>Select...</span>
         )}
       </button>
 
       {allowClear && !readOnly && value && value.length > 0 && (
         <button
           onClick={onClear}
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          className='absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600'
         >
           ×
         </button>
@@ -274,10 +284,12 @@ export default function CustomSelect(props: CustomSelectProps) {
             dropdownWidth
           )}
         >
-          <div className={classNames(
-            'max-h-60 overflow-auto',
-            grid ? `grid ${gridColumns} gap-1` : ''
-          )}>
+          <div
+            className={classNames(
+              'max-h-60 overflow-auto',
+              grid ? `grid ${gridColumns} gap-1` : ''
+            )}
+          >
             {options.map((option) => (
               <button
                 key={option.value}

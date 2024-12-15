@@ -45,7 +45,9 @@ export function dedup(array: number[]) {
 /**
  * Enhanced classNames util function to handle both objects and strings
  */
-export function classNames(...args: (string | Record<string, any> | undefined | null)[]) {
+export function classNames(
+  ...args: (string | Record<string, any> | undefined | null)[]
+) {
   return args
     .filter(Boolean)
     .map((arg) => {
