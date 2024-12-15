@@ -24,7 +24,6 @@ export default function CustomSelect(props: CustomSelectProps) {
     mode,
     allowClear,
     filterOption = () => true,
-    ...otherProps
   } = props
 
   const [isOpen, setIsOpen] = useState(false)
@@ -152,7 +151,7 @@ export default function CustomSelect(props: CustomSelectProps) {
         setValue([])
       }
     },
-    [value, options, setValue]
+    [value, options, setValue, unit.min, unit.total]
   )
 
   const clicksRef = useRef<Clicks[]>([])

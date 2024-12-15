@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { DEFAULT_LOCALE_EN } from './locale'
-import { Classes, Locale, OnError } from './types'
+import { Locale, OnError } from './types'
 
 /**
  * Creates an array of integers from start to end, inclusive
