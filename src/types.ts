@@ -253,14 +253,15 @@ export interface Locale {
   suffixMinutesForHourPeriod?: string
   errorInvalidCron?: string
   clearButtonText?: string
+  selectText?: string
   weekDays?: string[]
   months?: string[]
   altWeekDays?: string[]
   altMonths?: string[]
 }
 export type SetValueFunction = (
-  value: string,
-  extra: SetValueFunctionExtra
+  value: (number | string)[],
+  extra?: SetValueFunctionExtra
 ) => void
 export interface SetValueFunctionExtra {
   selectedPeriod: PeriodType
@@ -398,10 +399,10 @@ export interface CustomSelectProps
     | 'filterOption'
   > {
   grid?: boolean
-  setValue: SetValueNumbersOrUndefined
-  optionsList?: string[]
-  locale: Locale
-  value?: number[]
+  setValue: (value: (number | string)[]) => void
+  optionsList?: CronOption[]
+  locale: DefaultLocale
+  value?: (number | string)[]
   humanizeLabels?: boolean
   disabled: boolean
   readOnly: boolean
@@ -418,38 +419,8 @@ export type SetValueNumbersOrUndefined = Dispatch<
 >
 export type SetValuePeriod = Dispatch<SetStateAction<PeriodType>>
 export type SetInternalError = Dispatch<SetStateAction<boolean>>
-export interface DefaultLocale {
-  everyText: string
-  emptyMonths: string
-  emptyMonthDays: string
-  emptyMonthDaysShort: string
-  emptyWeekDays: string
-  emptyWeekDaysShort: string
-  emptyHours: string
-  emptyMinutes: string
-  emptyMinutesForHourPeriod: string
-  yearOption: string
-  monthOption: string
-  weekOption: string
-  dayOption: string
-  hourOption: string
-  minuteOption: string
-  rebootOption: string
-  prefixPeriod: string
-  prefixMonths: string
-  prefixMonthDays: string
-  prefixWeekDays: string
-  prefixWeekDaysForMonthAndYearPeriod: string
-  prefixHours: string
-  prefixMinutes: string
-  prefixMinutesForHourPeriod: string
-  suffixMinutesForHourPeriod: string
-  errorInvalidCron: string
-  clearButtonText: string
-  weekDays: string[]
-  months: string[]
-  altWeekDays: string[]
-  altMonths: string[]
+export interface DefaultLocale extends Required<Locale> {
+  selectText: string
 }
 export interface Classes {
   [key: string]: boolean
@@ -466,14 +437,16 @@ export interface Unit {
   alt?: string[]
 }
 export interface Clicks {
-  time: number
-  value: number
+  value: string
+  timestamp: number
 }
 
-export type FilterOption = ({
-  value,
-  label,
-}: {
+export type FilterOption = (option: { value: string; label: string }) => boolean
+
+export interface CronOption {
   value: string
   label: string
-}) => boolean
+  hidden?: boolean
+  'data-testid'?: string
+  isPeriodicValue?: boolean
+}

@@ -28,9 +28,9 @@ export const DEFAULT_LOCALE_EN: DefaultLocale = {
   suffixMinutesForHourPeriod: 'minute(s)',
   errorInvalidCron: 'Invalid cron expression',
   clearButtonText: 'Clear',
+  selectText: 'Select...',
   weekDays: [
-    // Order is important, the index will be used as value
-    'Sunday', // Sunday must always be first, it's "0"
+    'Sunday',
     'Monday',
     'Tuesday',
     'Wednesday',
@@ -39,7 +39,6 @@ export const DEFAULT_LOCALE_EN: DefaultLocale = {
     'Saturday',
   ],
   months: [
-    // Order is important, the index will be used as value
     'January',
     'February',
     'March',
@@ -53,9 +52,8 @@ export const DEFAULT_LOCALE_EN: DefaultLocale = {
     'November',
     'December',
   ],
-  // Order is important, the index will be used as value
   altWeekDays: [
-    'SUN', // Sunday must always be first, it's "0"
+    'SUN',
     'MON',
     'TUE',
     'WED',
@@ -63,7 +61,6 @@ export const DEFAULT_LOCALE_EN: DefaultLocale = {
     'FRI',
     'SAT',
   ],
-  // Order is important, the index will be used as value
   altMonths: [
     'JAN',
     'FEB',
